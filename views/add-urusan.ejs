@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="app-theme-page add-task-page">
+    <header class="app-header">
+      <div class="container app-header-inner">
+        <a class="app-brand" href="/">
+          <span class="brand-mark">L</span>
+          <span>LifeSaver</span>
+        </a>
+        <nav class="app-navigation" aria-label="Navigasi aplikasi">
+          <a href="/dashboard">Dashboard</a>
+          <a class="active" href="/urusan/new" aria-current="page">Tambah urusan</a>
+          <a href="/timeline">Timeline</a>
+          <a href="/notifications">Notifikasi</a>
+        </nav>
+        <a class="app-logout-link" href="/logout">Keluar</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <div class="dashboard-heading">
+          <div>
+            <p class="dashboard-kicker">CATAT HAL YANG PENTING</p>
+            <h1>Tambah urusan</h1>
+            <p class="dashboard-greeting">Simpan detail dan atur pengingatnya dari sini.</p>
+          </div>
+          <a href="/dashboard" class="app-back-link">← Kembali ke dashboard</a>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert error"><%= error %></div>
+        <% } %>
+
+        <form class="form-card app-form-card" method="POST" action="/urusan/new">
+          <div class="app-form-intro">
+            <p class="dashboard-kicker">DETAIL URUSAN</p>
+            <p>Lengkapi informasi agar mudah ditemukan dan diingat kembali.</p>
+          </div>
+          <div class="form-grid">
+            <label>
+              Kategori
+              <select name="category" required>
+                <option value="">Pilih kategori</option>
+                <option value="Kendaraan">Kendaraan</option>
+                <option value="Tagihan">Tagihan</option>
+                <option value="Garansi">Garansi</option>
+                <option value="Kontrak">Kontrak</option>
+                <option value="Dokumen">Dokumen</option>
+                <option value="Kesehatan">Kesehatan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </label>
+
+            <label>
+              Nama urusan
+              <input type="text" name="name" required />
+            </label>
+
+            <label>
+              Tanggal jatuh tempo
+              <input type="date" name="due_date" required />
+            </label>
+
+            <label>
+              Pola pengulangan
+              <select name="recurring_type">
+                <option value="one-time">Sekali</option>
+                <option value="monthly">Bulanan</option>
+                <option value="yearly">Tahunan</option>
+                <option value="custom">Kustom</option>
+              </select>
+            </label>
+
+            <label class="full-width">
+              Reminder (hari sebelum, pisahkan dengan koma)
+              <input type="text" name="reminder_days" value="3,1" />
+            </label>
+
+            <label class="full-width">
+              Deskripsi/Catatan
+              <textarea name="description" rows="4" placeholder="Tambahkan catatan penting"></textarea>
+            </label>
+          </div>
+
+          <button type="submit" class="app-form-submit">Simpan urusan <span aria-hidden="true">↗</span></button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

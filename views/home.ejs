@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LifeSaver membantu mengatur dokumen, tagihan, jadwal, dan urusan penting dalam satu ruang pribadi." />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="landing-page">
+    <header class="public-header">
+      <div class="public-nav container">
+        <a class="public-brand" href="/" aria-label="LifeSaver, beranda">
+          <span class="brand-mark">L</span>
+          <span>LifeSaver</span>
+        </a>
+        <nav class="public-links" aria-label="Navigasi utama">
+          <a href="#tentang">Tentang</a>
+          <a href="#fitur">Fitur</a>
+          <a href="#bantuan">Pusat bantuan</a>
+        </nav>
+        <div class="public-actions">
+          <% if (user) { %>
+            <a class="nav-login" href="/dashboard">Dashboard</a>
+            <a class="nav-cta" href="/logout">Keluar</a>
+          <% } else { %>
+            <a class="nav-login" href="/login">Login</a>
+            <a class="nav-cta" href="/register">Buat akun</a>
+          <% } %>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="landing-hero">
+        <div class="container landing-hero-inner">
+          <div class="landing-copy">
+            <p class="landing-kicker"><span></span> RUANG PRIBADI UNTUK HIDUP SEHARI-HARI</p>
+            <h1>LifeSaver membuat hal penting tetap <em>terkendali.</em></h1>
+            <p class="landing-intro">Simpan urusan, dokumen, dan jadwal penting dalam satu tempat. Lebih mudah ditemukan, lebih ringan diingat.</p>
+            <div class="landing-actions">
+              <% if (user) { %>
+                <a class="landing-button light" href="/dashboard">Buka dashboard <span aria-hidden="true">↗</span></a>
+              <% } else { %>
+                <a class="landing-button light" href="/register">Mulai atur urusan <span aria-hidden="true">↗</span></a>
+                <a class="landing-text-link" href="/login">Saya sudah punya akun</a>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="organizer-preview" aria-label="Gambaran pengelompokan urusan di LifeSaver">
+            <div class="preview-topline">
+              <div class="preview-brand"><span class="preview-brand-mark">L</span> Ruang pribadimu</div>
+              <span class="preview-caption">TERATUR, TANPA RIBET</span>
+            </div>
+            <div class="preview-content">
+              <div class="preview-list">
+                <div class="preview-row">
+                  <span class="preview-index">01</span>
+                  <strong>Tagihan &amp; pembayaran</strong>
+                  <span class="preview-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="preview-row">
+                  <span class="preview-index">02</span>
+                  <strong>Dokumen &amp; garansi</strong>
+                  <span class="preview-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="preview-row">
+                  <span class="preview-index">03</span>
+                  <strong>Jadwal &amp; pengingat</strong>
+                  <span class="preview-arrow" aria-hidden="true">↗</span>
+                </div>
+              </div>
+              <div class="preview-note">
+                <span>SEMUA YANG PENTING</span>
+                <strong>ada<br />tempatnya.</strong>
+                <i aria-hidden="true">✳</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section" id="tentang">
+        <div class="container about-layout">
+          <p class="section-index">01 / TENTANG LIFESAVER</p>
+          <div>
+            <h2>Bukan menambah pekerjaan. Mengurangi yang harus kamu ingat.</h2>
+            <p class="section-copy">Hal-hal kecil seperti masa berlaku, pembayaran, dan dokumen sering tersebar di banyak tempat. LifeSaver membantumu mengumpulkannya agar kamu tahu apa yang perlu diperhatikan, saat kamu membutuhkannya.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="features-section" id="fitur">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-index">02 / YANG BISA KAMU ATUR</p>
+            <h2>Urusan sehari-hari, lebih tertata.</h2>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-item">
+              <span class="feature-number">01</span>
+              <h3>Satu daftar yang jelas</h3>
+              <p>Kelompokkan tagihan, kendaraan, kesehatan, kontrak, dan kebutuhan lain sesuai kategorinya.</p>
+            </article>
+            <article class="feature-item">
+              <span class="feature-number">02</span>
+              <h3>Pengingat yang membantu</h3>
+              <p>Catat tanggal penting dan atur jeda pengingat agar urusan tidak terlewat begitu saja.</p>
+            </article>
+            <article class="feature-item">
+              <span class="feature-number">03</span>
+              <h3>Dokumen dekat dengan urusannya</h3>
+              <p>Simpan dokumen pendukung bersama catatan yang berkaitan, sehingga mudah ditemukan kembali.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="help-section" id="bantuan">
+        <div class="container help-layout">
+          <div class="help-intro">
+            <p class="section-index">03 / PUSAT BANTUAN</p>
+            <h2>Perlu bantuan?</h2>
+            <p>Temukan jawaban cepat atau hubungi layanan pelanggan.</p>
+            <% if (supportEmail) { %>
+              <a class="help-contact" href="mailto:<%= supportEmail %>">Hubungi customer service <span aria-hidden="true">↗</span></a>
+            <% } else { %>
+              <p class="support-unconfigured">Kontak customer service belum tersedia. Silakan login atau buat akun untuk mulai menggunakan LifeSaver.</p>
+            <% } %>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>Bagaimana cara mulai menggunakan LifeSaver?</summary>
+              <p>Buat akun, lalu tambahkan urusan pertamamu dari dashboard. Data tersimpan di akunmu.</p>
+            </details>
+            <details>
+              <summary>Apakah data saya terlihat oleh pengguna lain?</summary>
+              <p>Tidak. Setiap akun hanya dapat mengakses urusan dan dokumennya sendiri.</p>
+            </details>
+            <details>
+              <summary>Bisakah saya membuka data dari perangkat lain?</summary>
+              <p>Bisa. Login dengan akun yang sama untuk mengakses data milikmu dari perangkat lain.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="public-footer">
+      <div class="container footer-inner">
+        <a class="public-brand footer-brand" href="/"><span class="brand-mark">L</span><span>LifeSaver</span></a>
+        <p>Ruang yang lebih rapi untuk hal-hal penting.</p>
+        <div><a href="/login">Login</a><a href="/register">Registrasi</a></div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="app-theme-page notifications-page">
+    <header class="app-header">
+      <div class="container app-header-inner">
+        <a class="app-brand" href="/">
+          <span class="brand-mark">L</span>
+          <span>LifeSaver</span>
+        </a>
+        <nav class="app-navigation" aria-label="Navigasi aplikasi">
+          <a href="/dashboard">Dashboard</a>
+          <a href="/urusan/new">Tambah urusan</a>
+          <a href="/timeline">Timeline</a>
+          <a class="active" href="/notifications" aria-current="page">Notifikasi</a>
+        </nav>
+        <a class="app-logout-link" href="/logout">Keluar</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <div class="dashboard-heading">
+          <div>
+            <p class="dashboard-kicker">PEMBARUAN AKUN</p>
+            <h1>Notifikasi</h1>
+            <p class="dashboard-greeting"><strong><%= notifications.length %></strong> pemberitahuan tersimpan</p>
+          </div>
+          <a href="/dashboard" class="app-back-link">← Kembali ke dashboard</a>
+        </div>
+
+        <section class="panel app-notifications-panel">
+          <% if (notifications.length) { %>
+            <ul class="notification-list">
+              <% notifications.forEach((item) => { %>
+                <li>
+                  <span class="notification-mark" aria-hidden="true"></span>
+                  <div class="notification-content">
+                    <strong><%= item.urusan_name || 'Urusan' %></strong>
+                    <p><%= item.message %></p>
+                    <small><%= new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></small>
+                  </div>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <div class="notification-empty">
+              <span class="notification-mark" aria-hidden="true"></span>
+              <h2>Belum ada notifikasi</h2>
+              <p>Pemberitahuan tentang urusanmu akan muncul di sini.</p>
+              <a href="/urusan/new">Tambah urusan <span aria-hidden="true">↗</span></a>
+            </div>
+          <% } %>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

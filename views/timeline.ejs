@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="app-theme-page timeline-page">
+    <header class="app-header">
+      <div class="container app-header-inner">
+        <a class="app-brand" href="/">
+          <span class="brand-mark">L</span>
+          <span>LifeSaver</span>
+        </a>
+        <nav class="app-navigation" aria-label="Navigasi aplikasi">
+          <a href="/dashboard">Dashboard</a>
+          <a href="/urusan/new">Tambah urusan</a>
+          <a class="active" href="/timeline" aria-current="page">Timeline</a>
+          <a href="/notifications">Notifikasi</a>
+        </nav>
+        <a class="app-logout-link" href="/logout">Keluar</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <div class="dashboard-heading">
+          <div>
+            <p class="dashboard-kicker">URUTAN WAKTU</p>
+            <h1>Timeline</h1>
+            <p class="dashboard-greeting"><strong><%= tasks.length %></strong> urusan dalam linimasa</p>
+          </div>
+          <a href="/urusan/new" class="dashboard-add"><span aria-hidden="true">+</span> Tambah urusan</a>
+        </div>
+
+        <% if (tasks.length) { %>
+          <div class="app-timeline">
+            <% tasks.forEach((task) => { %>
+              <article class="app-timeline-item">
+                <div class="app-timeline-date">
+                  <span>JATUH TEMPO</span>
+                  <%= new Date(task.due_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                </div>
+                <div class="app-timeline-card">
+                  <div class="app-timeline-head">
+                    <div>
+                      <p class="dashboard-kicker"><%= task.category %></p>
+                      <h2><a href="/urusan/<%= task.id %>"><%= task.name %></a></h2>
+                    </div>
+                    <span class="badge <%= task.urgency %>"><%= task.urgency %></span>
+                  </div>
+                  <p class="app-timeline-description"><%= task.description || 'Tidak ada catatan tambahan.' %></p>
+                  <a class="app-timeline-link" href="/urusan/<%= task.id %>">Lihat detail <span aria-hidden="true">↗</span></a>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="app-timeline-empty">
+            <span class="empty-mark" aria-hidden="true">+</span>
+            <h2>Timeline masih kosong</h2>
+            <p>Tambahkan tanggal penting untuk mulai menyusun urutan kegiatanmu.</p>
+            <a href="/urusan/new">Tambah urusan <span aria-hidden="true">↗</span></a>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </body>
+</html>

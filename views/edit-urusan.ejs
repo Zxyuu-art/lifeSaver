@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand">LifeSaver</div>
+        <nav>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/timeline">Timeline</a>
+          <a href="/notifications">Notifikasi</a>
+          <a href="/logout">Logout</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>Edit Urusan</h1>
+          <a href="/urusan/<%= task.id %>" class="btn secondary">Lihat Detail</a>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert error"><%= error %></div>
+        <% } %>
+
+        <form class="form-card" method="POST" action="/urusan/<%= task.id %>/edit">
+          <div class="form-grid">
+            <label>
+              Kategori
+              <select name="category" required>
+                <option value="">Pilih kategori</option>
+                <option value="Kendaraan" <%= task.category === 'Kendaraan' ? 'selected' : '' %>>Kendaraan</option>
+                <option value="Tagihan" <%= task.category === 'Tagihan' ? 'selected' : '' %>>Tagihan</option>
+                <option value="Garansi" <%= task.category === 'Garansi' ? 'selected' : '' %>>Garansi</option>
+                <option value="Kontrak" <%= task.category === 'Kontrak' ? 'selected' : '' %>>Kontrak</option>
+                <option value="Dokumen" <%= task.category === 'Dokumen' ? 'selected' : '' %>>Dokumen</option>
+                <option value="Kesehatan" <%= task.category === 'Kesehatan' ? 'selected' : '' %>>Kesehatan</option>
+                <option value="Lainnya" <%= task.category === 'Lainnya' ? 'selected' : '' %>>Lainnya</option>
+              </select>
+            </label>
+
+            <label>
+              Nama urusan
+              <input type="text" name="name" value="<%= task.name %>" required />
+            </label>
+
+            <label>
+              Tanggal jatuh tempo
+              <input type="date" name="due_date" value="<%= task.due_date %>" required />
+            </label>
+
+            <label>
+              Pola pengulangan
+              <select name="recurring_type">
+                <option value="one-time" <%= task.recurring_type === 'one-time' ? 'selected' : '' %>>Sekali</option>
+                <option value="monthly" <%= task.recurring_type === 'monthly' ? 'selected' : '' %>>Bulanan</option>
+                <option value="yearly" <%= task.recurring_type === 'yearly' ? 'selected' : '' %>>Tahunan</option>
+                <option value="custom" <%= task.recurring_type === 'custom' ? 'selected' : '' %>>Kustom</option>
+              </select>
+            </label>
+
+            <label class="full-width">
+              Reminder (hari sebelum, pisahkan dengan koma)
+              <input type="text" name="reminder_days" value="<%= task.reminder_days || '3,1' %>" />
+            </label>
+
+            <label class="full-width">
+              Deskripsi/Catatan
+              <textarea name="description" rows="4"><%= task.description || '' %></textarea>
+            </label>
+          </div>
+
+          <button type="submit" class="btn primary">Simpan Perubahan</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="account-page">
+    <main class="account-shell register-shell">
+      <aside class="account-story">
+        <a class="account-brand" href="/"><span class="brand-mark">L</span><span>LifeSaver</span></a>
+        <div class="account-message">
+          <p class="account-kicker">MULAI DARI SINI</p>
+          <h1>Sedikit lebih rapi, setiap <em>hari.</em></h1>
+          <p>Buat ruang pribadi untuk menyimpan hal-hal yang tak ingin kamu lupakan.</p>
+          <div class="account-signature"><span>01</span><span>Semua urusan, dalam kendalimu</span></div>
+        </div>
+        <a class="account-home-link" href="/">← Kembali ke beranda</a>
+      </aside>
+
+      <section class="account-form-side">
+        <div class="account-form-top">
+          <span>Sudah punya akun?</span>
+          <a href="/login">Login</a>
+        </div>
+        <div class="account-form-content register-form-content">
+          <p class="account-kicker form-kicker">AKUN BARU</p>
+          <h2>Buat akun LifeSaver</h2>
+          <p class="account-form-copy">Mulai kumpulkan urusan pentingmu di satu tempat.</p>
+
+          <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert error"><%= error %></div>
+          <% } %>
+
+          <form method="POST" action="/register" class="account-form">
+            <label>
+              Nama
+              <input type="text" name="name" autocomplete="name" placeholder="Nama lengkap" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" placeholder="nama@email.com" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" autocomplete="new-password" minlength="8" placeholder="Minimal 8 karakter" required />
+            </label>
+            <label>
+              Konfirmasi password
+              <input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" placeholder="Ulangi password" required />
+            </label>
+            <button type="submit" class="account-submit">Buat akun <span aria-hidden="true">↗</span></button>
+          </form>
+
+          <p class="account-switch-copy">Dengan mendaftar, datamu tersimpan terpisah di akun pribadimu.</p>
+        </div>
+        <p class="account-privacy">LifeSaver · Ruang pribadi untuk hidup sehari-hari.</p>
+      </section>
+    </main>
+  </body>
+</html>

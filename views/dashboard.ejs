@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="dashboard-page">
+    <header class="app-header">
+      <div class="container app-header-inner">
+        <a class="app-brand" href="/">
+          <span class="brand-mark">L</span>
+          <span>LifeSaver</span>
+        </a>
+        <nav class="app-navigation" aria-label="Navigasi aplikasi">
+          <a class="active" href="/dashboard" aria-current="page">Dashboard</a>
+          <a href="/urusan/new">Tambah urusan</a>
+          <a href="/timeline">Timeline</a>
+          <a href="/notifications">Notifikasi</a>
+        </nav>
+        <a class="app-logout-link" href="/logout">Keluar</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <div class="dashboard-heading">
+          <div>
+            <p class="dashboard-kicker">RUANG PRIBADI</p>
+            <p class="dashboard-greeting">Selamat datang kembali, <strong><%= user.name %></strong></p>
+            <h1>Ringkasan urusan</h1>
+          </div>
+          <a href="/urusan/new" class="dashboard-add"><span aria-hidden="true">+</span> Tambah urusan</a>
+        </div>
+
+        <div class="dashboard-summary-line">
+          <span><strong><%= summary.total %></strong> urusan tercatat</span>
+          <span><strong><%= summary.urgent %></strong> perlu diperhatikan segera</span>
+        </div>
+
+        <div class="dashboard-shell">
+          <div class="dashboard-main-column">
+            <section class="overview-grid" aria-label="Ringkasan status urusan">
+              <div class="stat-card total">
+                <span>Total</span>
+                <strong><%= summary.total %></strong>
+              </div>
+              <div class="stat-card urgent">
+                <span>Urgent</span>
+                <strong><%= summary.urgent %></strong>
+              </div>
+              <div class="stat-card soon">
+                <span>Soon</span>
+                <strong><%= summary.soon %></strong>
+              </div>
+              <div class="stat-card safe">
+                <span>Safe</span>
+                <strong><%= summary.safe %></strong>
+              </div>
+            </section>
+
+            <section class="panel dashboard-panel">
+              <div class="dashboard-section-heading">
+                <p class="dashboard-kicker">JANGAN SAMPAI TERLEWAT</p>
+                <h2>Prioritas terdekat</h2>
+              </div>
+              <% if (todayTasks.length) { %>
+                <ul class="task-list">
+                  <% todayTasks.forEach((task) => { %>
+                    <li>
+                      <span class="badge urgent">Urgent</span>
+                      <div>
+                        <a class="dashboard-task-link" href="/urusan/<%= task.id %>"><%= task.name %></a>
+                        <small><%= task.category %> • <%= new Date(task.due_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></small>
+                      </div>
+                    </li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p class="dashboard-empty">Tidak ada prioritas mendesak saat ini.</p>
+              <% } %>
+            </section>
+
+            <section class="panel dashboard-panel">
+              <div class="dashboard-section-heading">
+                <p class="dashboard-kicker">SEMUA TERSIMPAN DI SINI</p>
+                <h2>Daftar urusan</h2>
+              </div>
+              <% if (tasks.length) { %>
+                <table class="table dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Kategori</th>
+                      <th>Jatuh Tempo</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% tasks.forEach((task) => { %>
+                      <tr>
+                        <td data-label="Urusan"><a href="/urusan/<%= task.id %>" class="text-link"><%= task.name %></a></td>
+                        <td data-label="Kategori"><%= task.category %></td>
+                        <td data-label="Jatuh tempo"><%= new Date(task.due_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></td>
+                        <td data-label="Status"><span class="badge <%= task.urgency %>"><%= task.urgency %></span></td>
+                        <td data-label="Aksi">
+                          <div class="doc-actions">
+                            <a href="/urusan/<%= task.id %>" class="text-link">Detail</a>
+                            <form method="POST" action="/urusan/<%= task.id %>/delete" onsubmit="return confirm('Hapus urusan ini?')">
+                              <button type="submit" class="text-link danger">Hapus</button>
+                            </form>
+                          </div>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              <% } else { %>
+                <div class="dashboard-empty-state">
+                  <span class="empty-mark" aria-hidden="true">+</span>
+                  <p>Belum ada urusan yang tersimpan.</p>
+                  <a href="/urusan/new">Tambahkan urusan pertama</a>
+                </div>
+              <% } %>
+            </section>
+          </div>
+
+          <aside class="dashboard-sidebar">
+            <div class="quick-panel dashboard-panel">
+              <p class="dashboard-kicker">LANGKAH BERIKUTNYA</p>
+              <h3>Urusan berikutnya</h3>
+              <% if (nextTask) { %>
+                <div class="task-meta next-task-meta">
+                  <strong><%= nextTask.name %></strong>
+                  <small><%= nextTask.category %> • <%= new Date(nextTask.due_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></small>
+                </div>
+                <a href="/urusan/<%= nextTask.id %>" class="dashboard-detail-link">Lihat detail <span aria-hidden="true">↗</span></a>
+              <% } else { %>
+                <p class="dashboard-empty">Belum ada urusan yang menunggu.</p>
+              <% } %>
+            </div>
+
+            <div class="quick-panel dashboard-panel upcoming-panel">
+              <p class="dashboard-kicker">SEGERA TIBA</p>
+              <h3>Jadwal terdekat</h3>
+              <% if (upcomingTasks.length) { %>
+                <ul class="task-list-compact">
+                  <% upcomingTasks.forEach((task) => { %>
+                    <li>
+                      <div class="task-meta">
+                        <strong><%= task.name %></strong>
+                        <small><%= new Date(task.due_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) %></small>
+                      </div>
+                      <span class="badge <%= task.urgency %>"><%= task.urgency %></span>
+                    </li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p class="dashboard-empty">Belum ada jadwal.</p>
+              <% } %>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
